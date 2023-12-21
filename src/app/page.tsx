@@ -1,4 +1,3 @@
-import PostCard from "@/components/PostCard";
 import { db } from "@/lib/db";
 
 const getPosts = async () => {
@@ -22,9 +21,7 @@ export default async function Home() {
   console.log("Posts Data", posts);
   return (
     <main className="grid items-center justify-center md:grid-cols-2 lg:grid-cols-4 gap-4 mt-10">
-      {posts.map((post) => (
-        <PostCard post={post} key={post.id} />
-      ))}
+      hello
     </main>
   );
 }
