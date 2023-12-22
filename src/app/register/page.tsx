@@ -22,10 +22,13 @@ import axios from "axios";
 import React, { use, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { Label } from "@/components/ui/label";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
+import { useToast } from "@/components/ui/use-toast";
+import Loader from "@/components/Loader";
 
 const Register = () => {
+  const [loader, setLoader] = useState(false);
+  const { toast } = useToast();
   const formSchema = z.object({
     firstName: z.string().min(1, { message: "Required" }).max(50, {
       message: "Fisrt Name can be maximum 50 characters",
@@ -57,22 +60,31 @@ const Register = () => {
 
   async function createUser(values: z.infer<typeof formSchema>) {
     try {
-      console.log(values);
-      // const response = await axios.post("/api/register", values);
+      setLoader(true);
+      const response = await axios.post("/api/register", values);
+      setLoader(false);
+      toast({
+        title: response.data.message,
+      });
     } catch (e) {
       console.log(e);
+    } finally {
+      setLoader(false);
     }
   }
 
   return (
     <>
-      <MaxWidthWrapper>
+      <MaxWidthWrapper className="md:px-20 lg:px-60">
         <Card>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(createUser)}>
               <CardHeader className="space-y-1">
-                <CardTitle className="text-2xl">Create an account</CardTitle>
-                <CardDescription>
+                <CardTitle className="text-2xl text-center flex flex-col gap-2">
+                  <span className="px-4 text-3xl">Quick Release</span>
+                  Create an account
+                </CardTitle>
+                <CardDescription className="text-center">
                   Enter your email below to create your account
                 </CardDescription>
               </CardHeader>
@@ -162,8 +174,15 @@ const Register = () => {
                 </div>
               </CardContent>
               <CardFooter>
-                <Button className="w-full" type="submit">
-                  Create account
+                <Button type="submit">
+                  {loader ? (
+                    <>
+                      <span className="px-2">Create account </span>
+                      <Loader />
+                    </>
+                  ) : (
+                    "Create account"
+                  )}
                 </Button>
               </CardFooter>
             </form>
