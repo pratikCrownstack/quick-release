@@ -24,7 +24,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import { useToast } from "@/components/ui/use-toast";
-import Loader from "@/components/Loader";
+import { Loader } from "lucide-react";
 
 const Register = () => {
   const [loader, setLoader] = useState(false);
