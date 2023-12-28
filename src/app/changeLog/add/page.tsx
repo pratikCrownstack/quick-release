@@ -21,13 +21,19 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import React, { use, useState } from "react";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import { Label } from "@/components/ui/label";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import Tiptap from "@/components/Tiptap";
+import { FormChangeLogPost } from "@/types";
+import { useMutation } from "react-query";
+import { useRouter } from "next/navigation";
 
 const AddChangeLog = () => {
+
+  const router = useRouter();
+
   const formSchema = z.object({
     title: z.string().min(1, { message: "Required" }).max(50, {
       message: "Fisrt Name can be maximum 50 characters",
@@ -51,22 +57,29 @@ const AddChangeLog = () => {
     },
   });
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    try {
-      // console.log(values);
-      const response = await axios.post("/api/changelogs/create", values);
-      console.log(response);
-    } catch (e) {
-      console.log(e);
-    }
-  }
+  const handleCreatePost: SubmitHandler<FormChangeLogPost> = (data) => {
+    createPost(data);
+  };
+
+  const { mutate: createPost, isLoading } = useMutation({
+    mutationFn: (newPost: FormChangeLogPost) => {
+      return axios.post("/api/changelogs/create", newPost);
+    },
+    onError: (err) => {
+      console.error(err);
+    },
+    onSuccess: () => {
+      router.push("/");
+      router.refresh();
+    },
+  });
 
   return (
     <>
       <MaxWidthWrapper>
         <Card>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
+            <form onSubmit={form.handleSubmit(handleCreatePost)}>
               <CardHeader className="space-y-1">
                 <CardTitle className="text-2xl">Add New Change Log</CardTitle>
                 <CardDescription>
@@ -74,6 +87,7 @@ const AddChangeLog = () => {
                   create your new changelog.
                 </CardDescription>
               </CardHeader>
+              
               <CardContent className="grid gap-4">
                 <div className="grid gap-2">
                   <FormField
@@ -93,25 +107,6 @@ const AddChangeLog = () => {
                     )}
                   />
                 </div>
-                {/* <div className="grid gap-2">
-                  <FormField
-                    control={form.control}
-                    name="description"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Description</FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder="Enter your description"
-                            {...field}
-                            type="textarea"
-                          />
-                        </FormControl>
-                        <FormMessage className="text-red-600" />
-                      </FormItem>
-                    )}
-                  />
-                </div> */}
                 <div className="grid gap-2">
                   <FormField
                     control={form.control}
@@ -169,7 +164,7 @@ const AddChangeLog = () => {
               </CardContent>
               <CardFooter>
                 <Button className="w-full" type="submit">
-                  Create account
+                  Create Change Log
                 </Button>
               </CardFooter>
             </form>

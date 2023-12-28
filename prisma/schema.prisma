@@ -46,4 +46,6 @@ model Logs {
   description     String
   releaseVersion  String
   releaseCategory String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

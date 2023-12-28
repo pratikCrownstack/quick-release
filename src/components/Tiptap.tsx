@@ -3,6 +3,7 @@ import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { Toolbar } from "./Toolbar";
 import Heading from "@tiptap/extension-heading"
+import BulletList from "@tiptap/extension-bullet-list";
 
 export default function Tiptap({
   description,
@@ -12,7 +13,7 @@ export default function Tiptap({
   onChange: (richText: string) => void;
 }) {
   const editor = useEditor({
-    extensions: [StarterKit.configure(), Heading.configure({
+    extensions: [BulletList, StarterKit.configure(), Heading.configure({
         HTMLAttributes: {
             class: 'text-xl font-bold',
             levels: [2],
@@ -22,7 +23,7 @@ export default function Tiptap({
     editorProps: {
       attributes: {
         class:
-          "rounded-md border min-h-[150px] border-input disabled:cursor-not-allowed disabled:opacity-50",
+          "rounded-md px-3 py-1 border min-h-[150px] border-input disabled:cursor-not-allowed disabled:opacity-50",
       },
     },
     onUpdate({ editor }) {
@@ -34,7 +35,7 @@ export default function Tiptap({
   return (
     <div className="flex flex-col justify-stretch min-h-full">
         <Toolbar editor={editor}/>
-        <EditorContent editor={editor} />
+        <EditorContent editor={editor}/>
     </div>
   )
 }

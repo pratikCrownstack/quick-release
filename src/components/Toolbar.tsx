@@ -7,7 +7,7 @@ import {
   Italic,
   List,
   ListOrdered,
-  Heading2,
+  Heading1
 } from "lucide-react";
 import { Toggle } from "../components/ui/toggle";
 
@@ -26,10 +26,10 @@ export function Toolbar({ editor }: Props) {
         size="sm"
         pressed={editor?.isActive("heading")}
         onPressedChange={() =>
-          editor?.chain().focus().toggleHeading({ level: 2 }).run()
+          editor?.chain().focus().toggleHeading({ level: 1 }).run()
         }
       >
-        <Heading2 className="h-4 w-4" />
+        <Heading1 className="h-4 w-4" />
       </Toggle>
       <Toggle
         size="sm"
