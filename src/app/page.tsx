@@ -1,27 +1,20 @@
-import { db } from "@/lib/db";
-
-const getPosts = async () => {
-  const response = await db.post.findMany({
-    select: {
-      id: true,
-      title: true,
-      content: true,
-      tag: true,
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
-  return response;
-};
+import { getServerSession } from "next-auth";
+import AuthForm from "@/components/AuthForm";
+import LoginForm from "../components/LoginForm";
 
 export default async function Home() {
-  const posts = await getPosts();
+  const session = await getServerSession();
+  console.log("session", session);
 
-  console.log("Posts Data", posts);
   return (
-    <main className="grid items-center justify-center md:grid-cols-2 lg:grid-cols-4 gap-4 mt-10">
-      hello
-    </main>
+    <>
+      <AuthForm
+        title="Login to your account"
+        description="Enter your email to login to quick release"
+        isLoginForm={true}
+      >
+        <LoginForm />
+      </AuthForm>
+    </>
   );
 }
