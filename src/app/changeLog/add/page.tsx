@@ -31,7 +31,6 @@ import { useMutation } from "react-query";
 import { useRouter } from "next/navigation";
 
 const AddChangeLog = () => {
-
   const router = useRouter();
 
   const formSchema = z.object({
@@ -69,7 +68,7 @@ const AddChangeLog = () => {
       console.error(err);
     },
     onSuccess: () => {
-      router.push("/");
+      router.push("/allLogs");
       router.refresh();
     },
   });
@@ -87,7 +86,7 @@ const AddChangeLog = () => {
                   create your new changelog.
                 </CardDescription>
               </CardHeader>
-              
+
               <CardContent className="grid gap-4">
                 <div className="grid gap-2">
                   <FormField
