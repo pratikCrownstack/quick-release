@@ -1,20 +1,10 @@
-import { getServerSession } from "next-auth";
-import AuthForm from "@/components/AuthForm";
-import LoginForm from "../components/LoginForm";
+import MaxWidthWrapper from "@/components/MaxWidthWrapper";
+import { TypographyH3, TypographyP } from "@/components/Typography";
+import { db } from "@/lib/db";
+import Link from "next/link";
+import dayjs from "dayjs";
+import { DateFormat } from "@/Utils/date-format";
 
 export default async function Home() {
-  const session = await getServerSession();
-  console.log("session", session);
-
-  return (
-    <>
-      <AuthForm
-        title="Login to your account"
-        description="Enter your email to login to quick release"
-        isLoginForm={true}
-      >
-        <LoginForm />
-      </AuthForm>
-    </>
-  );
+  return <>Homepage</>;
 }

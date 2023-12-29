@@ -3,3 +3,9 @@ export type FormInputPost = {
     content: string,
     tagId: string
 }
+export type FormChangeLogPost = {
+    title : string,
+    description: string,
+    releaseVersion: string,
+    releaseCategory: string
+}
