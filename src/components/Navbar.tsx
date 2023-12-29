@@ -57,7 +57,7 @@ const components: { title: string; href: string; description: string }[] = [
 export function Navbar() {
   return (
     <div className="flex justify-around items-center my-4">
-      <Link href="/">Quick Release</Link>
+      <Link href="/allLogs">Quick Release</Link>
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>

@@ -5,6 +5,7 @@ import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import { TypographyH1, TypographyP } from "@/components/Typography";
 import dayjs from "dayjs";
 import { DateFormat } from "@/Utils/date-format";
+import { Navbar } from "@/components/Navbar";
 
 interface BlogDetailProp {
   params: {
@@ -35,9 +36,14 @@ const BlogDetail: FC<BlogDetailProp> = async ({ params }) => {
 
   return (
     <div>
+      <Navbar />
       <MaxWidthWrapper>
-        <TypographyH1 children={`${changelog?.title}`}/>
-        <TypographyP children={`Published on ${dayjs(changelog?.createdAt).format(DateFormat.LONG)} as Version ${changelog?.releaseVersion}`} />
+        <TypographyH1 children={`${changelog?.title}`} />
+        <TypographyP
+          children={`Published on ${dayjs(changelog?.createdAt).format(
+            DateFormat.LONG
+          )} as Version ${changelog?.releaseVersion}`}
+        />
         <div className="py-12">{parse(changelog?.description as any)}</div>
         <h1>{changelog?.releaseCategory}</h1>
       </MaxWidthWrapper>

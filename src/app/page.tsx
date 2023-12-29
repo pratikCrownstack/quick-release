@@ -1,10 +1,16 @@
-import MaxWidthWrapper from "@/components/MaxWidthWrapper";
-import { TypographyH3, TypographyP } from "@/components/Typography";
-import { db } from "@/lib/db";
-import Link from "next/link";
-import dayjs from "dayjs";
-import { DateFormat } from "@/Utils/date-format";
+import AuthForm from "@/components/AuthForm";
+import LoginForm from "@/components/LoginForm";
 
 export default async function Home() {
-  return <>Homepage</>;
+  return (
+    <>
+      <AuthForm
+        title="Login to your account"
+        description="Enter your email to login to quick release"
+        isLoginForm={true}
+      >
+        <LoginForm />
+      </AuthForm>
+    </>
+  );
 }
