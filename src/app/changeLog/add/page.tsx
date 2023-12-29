@@ -29,6 +29,7 @@ import Tiptap from "@/components/Tiptap";
 import { FormChangeLogPost } from "@/types";
 import { useMutation } from "react-query";
 import { useRouter } from "next/navigation";
+import { Navbar } from "@/components/Navbar";
 
 const AddChangeLog = () => {
   const router = useRouter();
@@ -75,6 +76,7 @@ const AddChangeLog = () => {
 
   return (
     <>
+      <Navbar />
       <MaxWidthWrapper>
         <Card>
           <Form {...form}>

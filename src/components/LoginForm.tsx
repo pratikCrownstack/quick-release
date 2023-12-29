@@ -2,16 +2,15 @@
 import { cn } from "@/lib/utils";
 import { Loader } from "lucide-react";
 import React, { useState } from "react";
-import { Button, buttonVariants } from "./ui/button";
-import Image from "next/image";
-import { Label } from "@radix-ui/react-label";
+import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useToast } from "./ui/use-toast";
 import Link from "next/link";
+import { useToast } from "@/components/ui/use-toast";
+import { useRouter } from "next/navigation";
 
 import {
   FormField,
@@ -24,6 +23,7 @@ import {
 
 const LoginForm = () => {
   const [isLoading, setIsLoading] = React.useState(false);
+  const router = useRouter();
 
   const [loader, setLoader] = useState(false);
   const { toast } = useToast();
@@ -55,16 +55,20 @@ const LoginForm = () => {
         password: values.password,
         redirect: false,
       });
-      setLoader(false);
+      router.push("/allLogs");
       if (res?.error) {
         toast({
-          title:
-            res?.error === "CredentialsSignin" ? "Invalid Credentials" : "",
+          title: res?.error as string,
         });
       }
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      if (error) {
+        toast({
+          title: error ? "Invalid Credentials" : "",
+        });
+      }
     } finally {
+      setLoader(false);
     }
   }
   return (

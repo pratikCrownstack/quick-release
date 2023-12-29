@@ -26,6 +26,15 @@ const handler = NextAuth({
           },
         });
         const user = response[0];
+        const uniqueUser = await db.user.findUnique({
+          where: {
+            email: credentials?.email,
+          },
+        });
+        if (!uniqueUser) {
+          throw new Error("Email Not registered!");
+        }
+
         const passwordCorrect = await compare(
           credentials?.password || "",
           user.password
@@ -36,6 +45,10 @@ const handler = NextAuth({
             email: user.email,
           };
         }
+        if (!passwordCorrect) {
+          throw new Error("Incorrect Password!");
+        }
+
         return null;
       },
     }),
